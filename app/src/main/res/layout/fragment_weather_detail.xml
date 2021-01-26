@@ -18,12 +18,13 @@
 
 
 
-
+    <!-- TODO: low: Design didn't use any card. -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
+        <!-- TODO: high: Use ConstraintLayout. -->
         <LinearLayout
             android:id="@+id/item_weather"
             android:layout_width="match_parent"
@@ -48,6 +49,7 @@
                     android:textSize="30sp">
                 </TextView>
 
+                <!-- TODO: low: The button is painful small to click on comfortably! -->
                 <ImageView
                     android:id="@+id/detail_favorite"
                     android:layout_width="wrap_content"

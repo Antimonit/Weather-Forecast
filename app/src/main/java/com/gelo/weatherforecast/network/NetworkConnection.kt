@@ -28,6 +28,7 @@ class NetworkConnection (private val context: Context): LiveData<Boolean>() {
             context.unregisterReceiver(networkReceiver)
     }
 
+    // TODO: low: Function "connectivityManagerCallback" is never used
     private fun connectivityManagerCallback(): ConnectivityManager.NetworkCallback {
             networkCallback = object: ConnectivityManager.NetworkCallback(){
 

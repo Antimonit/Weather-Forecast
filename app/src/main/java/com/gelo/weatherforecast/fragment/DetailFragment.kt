@@ -82,6 +82,7 @@ class DetailFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // TODO: critical: Don't use png icons that don't scale.
         toolbar.setNavigationIcon(R.drawable.arrow);
         toolbar.setTitle(resources.getString(R.string.app_name))
         toolbar.setNavigationOnClickListener(View.OnClickListener {
@@ -96,6 +97,7 @@ class DetailFragment : Fragment(){
                 keyCode: Int,
                 event: KeyEvent
             ): Boolean {
+                // TODO: high: Why do we re-download the data for the list? And why do we do it inside the Detail screen?
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
                         weatherAppViewModel.getWeatherByCityIDS(resources.getString(R.string.city_ids))
@@ -106,6 +108,7 @@ class DetailFragment : Fragment(){
             }
         })
 
+        // TODO: low: Redundant SAM-constructor
         favorite.setOnClickListener(View.OnClickListener {
             if (isClicked){
                 favorite.setImageResource(R.drawable.unselect)
@@ -122,6 +125,8 @@ class DetailFragment : Fragment(){
     }
 
     private fun populateData(){
+        // TODO: medium: Extract `sharedPreferences?.getBoolean(weatherDetailResponse?.list?.get(0)?.id, false)`.
+        // TODO: low: Or simplify to `if (condition) {} else {}`.
         if (sharedPreferences?.getBoolean(weatherDetailResponse?.list?.get(0)?.id, false) == null || sharedPreferences?.getBoolean(weatherDetailResponse?.list?.get(0)?.id, false) == false){
             isClicked = false
             favorite.setImageResource(R.drawable.unselect)
@@ -131,9 +136,11 @@ class DetailFragment : Fragment(){
         }
 
         for (i:Int in 0 until  weatherDetailResponse?.list!!.size){
+            // TODO: low: Extract `weatherDetailResponse?.list?.get(i)`.
             val rounded = String.format("%.1f", weatherDetailResponse?.list?.get(i)?.main!!.temp)
 
             location.text = weatherDetailResponse?.list?.get(i)!!.name
+            // TODO: low: Do not concatenate text displayed with setText. Use resource string with placeholders. 3x
             temperature.text = rounded + resources.getString(R.string.temperature)
             weather.text = weatherDetailResponse?.list?.get(i)?.weather!![0].main
             temp_high.text = resources.getString(R.string.high) + " "+ weatherDetailResponse?.list?.get(i)?.main!!.temp_max.roundToInt() + resources.getString(R.string.temperature) + " /"
@@ -141,6 +148,10 @@ class DetailFragment : Fragment(){
         }
     }
 
+    // TODO: low: Function 'showWeatherList' could be private.
+    // TODO: low: Actual value of parameter 'tag' is always 'main_to_weather_list'
+    // TODO: low: Actual value of parameter 'addToBackStack' is always 'false'
+    // TODO: high: Why is this the same as in MainActivity??
     fun showWeatherList(weatherListResponse: WeatherListResponse, tag: String, addToBackStack: Boolean){
         val manager = activity?.supportFragmentManager
         val ft = manager?.beginTransaction()

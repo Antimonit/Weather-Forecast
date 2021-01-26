@@ -3,8 +3,11 @@ package com.gelo.weatherforecast.api.response
 import com.squareup.moshi.Json
 import java.io.Serializable
 
+// TODO: high: All properties are mutable! Should be immutable.
+// TODO: high: Duplicate of [WeatherDetailResponse].
 class WeatherListResponse: Serializable {
 
+    // TODO: low: Property "cnt" is never used. Moshi does not require you to map every object of the response. many times
     @Json(name = "cnt")
     var cnt: Int = 0
 

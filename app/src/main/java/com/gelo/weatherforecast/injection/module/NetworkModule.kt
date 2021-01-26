@@ -28,6 +28,8 @@ object NetworkModule {
         return retrofit.create(WeatherAPI::class.java)
     }
 
+    // TODO: low: Property "gson" is never used
+    // TODO: low: Please don't use Gson. Moshi (or KotlinX serialization) will do better job.
     var gson = GsonBuilder()
         .setLenient()
         .create()
@@ -43,6 +45,7 @@ object NetworkModule {
         .connectTimeout(2, TimeUnit.MINUTES)
         .build()
 
+    // TODO: medium: Why not just use `List<>` instead of `ArrayList<>`?
     abstract class MoshiArrayListJsonAdapter<C : MutableCollection<T>?, T> private constructor(
         private val elementAdapter: JsonAdapter<T>
     ) :

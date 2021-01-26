@@ -3,6 +3,7 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true" />
     <domain-config cleartextTrafficPermitted="true">
+        <!-- TODO: medium: Why? It should be possible to communicate via https without this. -->
         <domain includeSubdomains="true">api.openweathermap.org/data/2.5</domain>
     </domain-config>
 </network-security-config>

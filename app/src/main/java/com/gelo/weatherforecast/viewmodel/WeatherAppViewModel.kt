@@ -12,15 +12,19 @@ import javax.inject.Inject
 import retrofit2.Callback
 import retrofit2.Response
 
+// TODO: high: Use separate ViewModels for List and Detail screens!
 class WeatherAppViewModel : BaseViewModel(){
 
     @Inject
     lateinit var weatherAPI: WeatherAPI
 
+    // TODO: low: Define as `val` instead. 2x
+    // TODO: low: Publishing MutableLiveData instead of LiveData.
     var mutableWeatherListResponse: MutableLiveData<WeatherListResponse> = MutableLiveData()
     var mutableWeatherDetailResponse: MutableLiveData<WeatherDetailResponse> = MutableLiveData()
 
     fun getWeatherByCityIDS(cityIDS: String){
+        // TODO: low: Why declare the variable here and not inside of `onResponse` where it is assigned and used?
         var weatherListResponse: WeatherListResponse? = null
 
         weatherAPI.getWeatherByCityIDS(cityIDS, UNITS, API_KEY).enqueue(object : Callback<WeatherListResponse>{
@@ -29,6 +33,7 @@ class WeatherAppViewModel : BaseViewModel(){
                     weatherListResponse = listResponse.body()
 
                     Log.d("Weather API", "success")
+                    // TODO: low: Pushing nullable type into LiveData of non-nullable type.
                     mutableWeatherListResponse.postValue(weatherListResponse)
                 }
             }
@@ -40,6 +45,7 @@ class WeatherAppViewModel : BaseViewModel(){
     }
 
     fun getWeatherDetail(cityID: String){
+        // TODO: low: Why declare the variable here and not inside of `onResponse` where it is assigned and used?
         var weatherDetailResponse: WeatherDetailResponse? = null
 
         weatherAPI.getWeatherDetail(cityID, UNITS, API_KEY).enqueue(object : Callback<WeatherDetailResponse>{
@@ -48,6 +54,7 @@ class WeatherAppViewModel : BaseViewModel(){
                     weatherDetailResponse = response.body()
 
                     Log.d("Weather Detail API", "success")
+                    // TODO: low: Pushing nullable type into LiveData of non-nullable type.
                     mutableWeatherDetailResponse.postValue(weatherDetailResponse)
                 }
             }

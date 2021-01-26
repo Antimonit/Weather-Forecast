@@ -3,6 +3,7 @@ package com.gelo.weatherforecast.api.response
 import com.squareup.moshi.Json
 import java.io.Serializable
 
+// TODO: medium: Class "Weather" is never used
 class Weather: Serializable{
 
     @Json(name = "id")

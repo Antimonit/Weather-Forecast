@@ -28,6 +28,7 @@ import com.gelo.weatherforecast.utils.EXTRA_WEATHERS_RESPONSE
 import com.gelo.weatherforecast.viewmodel.WeatherAppViewModel
 import kotterknife.bindView
 
+// TODO: low: Formatting, new lines...
 class WeatherListFragment : Fragment(), CityListAdapter.OnItemCLickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var weatherAppViewModel: WeatherAppViewModel
@@ -50,6 +51,7 @@ class WeatherListFragment : Fragment(), CityListAdapter.OnItemCLickListener, Swi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO: medium: In `onActivityCreated` you do `weatherListResponse!!` that would crash if arguments were null. Better crash early and not let the problem propagate too deep.
         if (arguments != null){
             weatherListResponse = arguments!!.getSerializable(EXTRA_WEATHERS_RESPONSE) as WeatherListResponse
         }
@@ -71,6 +73,7 @@ class WeatherListFragment : Fragment(), CityListAdapter.OnItemCLickListener, Swi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // TODO: low: Don't implement `SwipeRefreshLayout.OnRefreshListener` by this enclosing Fragment. It is an implementation detail, we don't need to provide the interface to any other class but implementing an interface is always public.
         swipe_refresh_layout.setOnRefreshListener(this)
     }
 
@@ -116,6 +119,7 @@ class WeatherListFragment : Fragment(), CityListAdapter.OnItemCLickListener, Swi
     }
 
    private fun checkConnectivity() {
+       // TODO: medium: For some reason, the dialog is displayed twice on configuration change.
             val dialogBuilder = AlertDialog.Builder(activity)
             dialogBuilder.setMessage(resources.getString(R.string.network_error_message))
                 .setCancelable(false)
@@ -137,6 +141,7 @@ class WeatherListFragment : Fragment(), CityListAdapter.OnItemCLickListener, Swi
     override fun onRefresh() {
         Log.d("REFRESH", "refreshing..")
 
+        // TODO: high: Refreshing without internet connection will show the loading indicator indefinitely.
         weatherAppViewModel.getWeatherByCityIDS(resources.getString(R.string.city_ids))
         swipe_refresh_layout.isRefreshing = true
 
